@@ -11,7 +11,6 @@ export default function Search() {
     useEffect(() => {
         const searchLine = document.getElementById("search");
         setTimeout(() => {searchLine.focus()}, 120) //Задержка для плавности
-        // searchLine.focus()
     })
     const [symbol, setSymbol] = useState('');
     return (

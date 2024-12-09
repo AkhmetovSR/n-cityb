@@ -29,18 +29,26 @@ export default function SearchResult(props) {
     })
 
     const [index, setIndex] = useState(false);
-    function closeCard() {setIndex(false)}
-    function closeKey(){
+
+    function closeCard() {
+        setIndex(false)
+    }
+
+    function closeKey() {
         document.getElementById('mainDivCard').focus()
     }
+
 
     //При клике на слово: если клавиатура открыта или похожее условие, то сделать задержку и сменить useState
     function Cards({cards, setIndex}) {
         return (
             <div className={s.mainDivCard} id='mainDivCard'>
                 {cards.map((card, i) => (
-                    <div key={card.id} className={s.divWord} >
-                        <motion.div transition={{duration: 0.3, ease: "easeInOut"}} onClick={() => {setIndex(i)}} layoutId={card.id} className={s.Word}>
+                    <div key={card.id} className={s.divWord}>
+                        <motion.div transition={{duration: 0.3, ease: "easeInOut"}} style={{color: "white"}}
+                                    onClick={() => {
+                                        setIndex(i)
+                                    }} layoutId={card.id} className={s.Word}>
                             <motion.div className={s.Name} onClick={closeKey}>{card.word}</motion.div>
                         </motion.div>
                     </div>
@@ -49,58 +57,74 @@ export default function SearchResult(props) {
         );
     }
 
-    function ModalCard({ index, cards }) {
+    function ModalCard({index, cards}) {
+        const [deg, setDeg] = useState([])
+        const [scale, setScale] = useState([])
+        const [duration, setDuration] = useState(0.20)
+        const [Y, setY] = useState([])
+
+        function rotate(){
+            setDeg([0,-90, -180])
+            setScale([1,0.7, 1])
+            setDuration(0.45)
+            setY([0, 80, 0])
+        }
         return (
             /* Container */  // Раскрывающаяся карточка
-            <motion.div id={cards[index].id} className={s.OpenCard} style={{position: "fixed", top: "50%", transform: "translate(-50%, -50%)", left: "50%", display: "flex", width: "fit-content", height: "fit-content", justifyContent: "center", justifySelf: "center", alignContent: "center"}}>
+            <motion.div id={cards[index].id}
+                        style={{
+                            position: "fixed",
+                            top: "50%",
+                            transform: "translate(-50%, -50%)",
+                            left: "50%",
+                            width: "fit-content",
+                            height: "fit-content",
+                            justifyContent: "center",
+                            justifySelf: "center",
+                            alignContent: "center"
+                        }}
+                        className={s.S}
+            >
                 {/* Card */}
-                <motion.div transition={{type: "spring", stiffness: 200, damping: 20, duration: 0.3, ease: "easeInOut"}} layoutId={cards[index].id} className={s.LayoutID}>
+                <motion.div transition={{ ease: "easeInOut", duration: duration}}
+                            layoutId={cards[index].id} className={s.LayoutID}
+                            // initial={{scale: 1, rotateY:0}}
+                            animate={{scale: scale, rotateY: deg, translateY: Y}}
+                            // exit={{scale: 1, rotateY: 0}}
+                >
+
                     {index !== false && (
-                        <motion.div exit={{ opacity: 0 }} transition={{duration: 0.3, ease: "easeInOut",}}>
-                            <div className={s.ColseCard} onClick={closeCard}>Закрыть</div>
+                        <motion.div exit={{opacity: 0}} transition={{duration: 0.3, ease: "easeInOut"}}>
+                            <div className={s.CloseCard} onClick={rotate}>Закрыть</div>
                             <div className={s.Title}>{cards[index].word}</div>
                         </motion.div>
                     )}
                 </motion.div>
+                {/*<motion.div className={s.child} animate={{opacity:scale, scale:scale, visibility: visible}} initial={{rotateY: deg, scale:scale, visibility: visible}}  transition={{type: "spring", stiffness: 1000, damping: 100, duration: 0.1, ease: "easeInOut", delay: 0.2}}>*/}
+
+                {/*</motion.div>*/}
             </motion.div>
         );
     }
-
-
     return (
-        <>
-            {/*<div*/}
-            {/*    // style={{*/}
-            {/*    //     height: "100vh",*/}
-            {/*    // }}*/}
-            {/*    // className={`flex h-full justify-center content-center bg-black`}*/}
-            {/*    className={s.Cards}*/}
-            {/*>*/}
-                <LayoutGroup>
-                    <AnimatePresence>
-                        <Cards index={index} setIndex={setIndex} cards={cards} />
-                        {index !== false && (<motion.div className={s.Back} initial={{ opacity: 0 }} animate={{ opacity: 0.8 }} exit={{opacity:0}} transition={{ duration: 0.3, ease: "easeInOut" }} key="overlay" onClick={() => {setIndex(false);}}/>)}
-                        {index !== false && (<ModalCard key="singlecard" index={index} cards={cards} setIndex={setIndex}/>)}
-                    </AnimatePresence>
-                </LayoutGroup>
-            {/*</div>*/}
-        </>
+        <div className={s.Main}>
+            <LayoutGroup>
+                <AnimatePresence>
+                    <Cards index={index} setIndex={setIndex} cards={cards}/>
+                    {index !== false && (<motion.div className={s.Back} initial={{opacity: 0}} animate={{opacity: 0.8}} exit={{ opacity: 0 }}
+                                                     style={{backgroundColor: "rgba(0,0,0,0.99)",
+                                                         width: "100vw",
+                                                         height: "100vh",
+                                                         position: "fixed"}}
+                                                      transition={{duration: 0.3, ease: "easeInOut"}}
+
+                                                     onClick={() => {
+                        setIndex(false);
+                    }}/>)}
+                    {index !== false && (<ModalCard index={index} cards={cards} setIndex={setIndex}/>)}
+                    {/*{index !== false && (<ModalCard key="singleCard" index={index} cards={cards} setIndex={setIndex}/>)}*/}
+                </AnimatePresence>
+            </LayoutGroup>
+        </div>
     );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-// const finder = filteredSearch.map(word =>
-//     <motion.div key={word.id} id={word.id} className={s.Find} initial={{scale: 1.2, opacity: 0}}
-//                 animate={{scale: 1, opacity: 1}} exit={{scale: 1.2, opacity: 0}}
-//                 transition={{duration: 0.1}}>{word.word}</motion.div>
-// )

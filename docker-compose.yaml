@@ -1,7 +1,7 @@
 services:
   front:
     stdin_open: true
-    image: akhmetovsr/tgrepository1:front-n-city
+    image: akhmetovsr/tgrepository1:ncity
 
     ports:
       - "80:80"
