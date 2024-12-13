@@ -1,31 +1,11 @@
-/*.SearchResult{*/
-/*    !*border: 1px solid red;*!*/
-/*    overflow: scroll;*/
-/*    display: grid;*/
-/*    justify-items: center;*/
-/*}*/
-/*.SearchWord{*/
 
-/*}*/
-
-/*.Find{*/
-/*    border: 1px solid red;*/
-/*    color: white;*/
-/*    background-color: #484848;*/
-/*    border-radius: 15px;*/
-/*    display: grid;*/
-/*    !*text-align: center;*!*/
-/*    align-content: center;*/
-/*    margin: 5px;*/
-/*    height: 40px;*/
-/*    width: 70%;*/
-/*    padding-left: 15px;*/
-/*    font-size: 120%;*/
-/*}*/
 .Main{
     /*perspective: 800px;*/
 }
 .S{
+    perspective: 800px;
+}
+.cardContent{
     perspective: 800px;
 }
 .divWord{
@@ -55,6 +35,7 @@
     border-radius: 10px;
     text-align: center;
     height: 5vh;
+    border: 1px solid red;
 }
 .LayoutID{
     /*border: 1px solid green;*/
@@ -66,7 +47,6 @@
     background-color: rgb(131, 131, 131);
     text-align: center;
     display: grid;
-    /*transform-style: preserve-3d;*/
 }
 .Title{
     color: #FFA800;
@@ -79,14 +59,7 @@
     border-radius: 10px;
 }
 .Back{
-    /*border: 1px solid blue;*/
-    /*background-color: rgba(16,16,16);*/
-    /*filter: blur(5rem);*/
-    /*height: 100vh;*/
-    /*width: 100vw;*/
     position: absolute;
-    /*opacity: 100%;*/
-    /*z-index: 1;*/
     top:0;
 }
 .Name{
@@ -95,14 +68,27 @@
     display: flex;
     text-align: justify-all;
     /*align-self: center;*/
+    /*border: 1px solid red;*/
 }
-.child{
-    position: absolute;
-    width: 60vw;
-    height: 60vh;
-    background-color: #FFA800;
-    border-radius: 20px;
+.Map{
+    position:relative;
+    overflow:hidden;
 }
-.Background{
-    background-color: red;
+.AMap{
+    color:#eee;
+    font-size:12px;
+    position:absolute;
+    top:0;
+}
+.AAMap{
+    color:#eee;
+    font-size:12px;
+    position:absolute;
+    top:14px;
+}
+.iFrame{
+    position:relative;
+    width: 300px;
+    border-radius: 25px;
+    border: none;
 }
